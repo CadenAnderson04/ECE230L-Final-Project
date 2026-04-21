@@ -30,12 +30,12 @@ module dff(
     initial begin
         Q <= 0;
     end
-    always @(posedge Clock, posedge Reset, posedge en) begin
-        if (en) // uncertain solution
-            if (Reset)
+    always @(posedge Clock, posedge Reset) begin
+            if (Reset) begin
                 Q <= 0;
-            else
+            end
+            else if(en) begin
                 Q <= D;
             end
+        end
 endmodule
-
