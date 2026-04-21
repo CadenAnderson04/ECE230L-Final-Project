@@ -21,21 +21,21 @@
 
 
 module dff(
-    input d,
-    input clk,
-    input rst,
+    input D,
+    input Clock,
+    input Reset,
     input en,
-    output reg q
+    output reg Q
     );
     initial begin
-        q <= 0;
+        Q <= 0;
     end
-    always @(posedge clk, posedge rst, posedge en) begin
+    always @(posedge Clock, posedge Reset, posedge en) begin
         if (en) // uncertain solution
-            if (rst)
-                q <= 0;
+            if (Reset)
+                Q <= 0;
             else
-                q <= d;
+                Q <= D;
             end
 endmodule
 
