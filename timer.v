@@ -8,8 +8,7 @@ module timer(
     output reg [5:0] state     //6-bits to represent the highest number 59
 );
 
-assign stop_signal = (~state);
-assign total_stop = stop_signal || ~en;
+wire is_zero = (state == 6'b0);
 
 always @(posedge clk) begin
     if (rst) begin
@@ -18,7 +17,7 @@ always @(posedge clk) begin
     else if (load) begin
         state <= load_value;
     end
-    else if (~total_stop) begin
+    else if (en && !is_zero) begin
         state <= state - 1'b1;
     end
 end
