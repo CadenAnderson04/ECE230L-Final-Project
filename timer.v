@@ -5,28 +5,22 @@ module timer(
     input en,               //Enables or Disables clock
     input load,             //If load=1, load the counter with "load_value"
     input [5:0] load_value, //Value to load into counter register. Counter will then start counting from this value
-    output [5:0] state     //6-bits to represent the highest number 59
+    output reg [5:0] state     //6-bits to represent the highest number 59
 );
 
 assign stop_signal = (~state);
 assign total_stop = stop_signal || ~en;
 
-if (load)
-    assign state = load_value;
+always @(posedge clk) begin
+    if (rst) begin
+        state <= 6'b0;
+    end
+    else if (load) begin
+        state <= load_value;
+    end
+    else if (~total_stop) begin
+        state <= state - 1'b1;
+    end
 end
-
-dff bitZero (
-    .q(state[0]),
-    .d(~state[0]),
-    .clk(clk),
-    .rst(rst),
-    .en(total_stop)
-);
-
-//dff bitOne (
-//    .q(state[1]),
-//    .d(state[1] ^ ~state[0])
-//);
-
 
 endmodule
