@@ -66,9 +66,14 @@ timer timer_inst (
 .state(timer_output)
 );
 
+// Assign leds
+assign led[8:3] = stopwatch_output;
+assign led[15:10] = timer_output;
+
 // Multiplexer variable wires
-wire stopwatch_output = led[8:3];
-wire timer_output = led[15:10]; 
+wire [5:0] stopwatch_output;
+wire [5:0] timer_output;
+wire [5:0] countMulti;
 
 //Timer vs Stopwatch Multiplexer
 twoToOne_mux twoToOne_mux_inst (
