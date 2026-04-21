@@ -8,7 +8,7 @@ module stopwatch(
 
 // Reset logic
     wire reset_trigger;
-    assign reset_trigger = (state[5] && state[4] && state[3] && ~state[2] && state[1] && state[0]);
+    assign reset_trigger = (state[5] && state[4] && state[3] && state[2]);
     wire total_reset;
     assign total_reset = rst | reset_trigger;
         
