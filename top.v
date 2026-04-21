@@ -36,7 +36,7 @@ seven_segment_inf seven_segment_inf_inst (.clk(clk), .rst(btnC), .count(count) ,
 /******** UNCOMMENT & UPDATE THIS SECTION ********/
 //wire "count" feeds in count value to seven segment display. This should be a 6-bit value
 //This will decide if seven segment display shows stopwatch count or timer count
-//wire [5:0] count = ;
+wire [5:0] count = countMulti;
 
 /******** UPDATE THIS SECTION ********/
 /******* INITIALIZE STOPWATCH AND TIMER MODULE ***********/
@@ -50,20 +50,46 @@ wire [5:0] load_value = sw[15:10];      //Set Timer Value (Value to load in time
 //Use "clk_1Hz" as clock signal to stopwatch and timer modules
 stopwatch stopwatch_inst (
 .clk(clk_1Hz),
-.en(~sw[0] && sw[1]),
+.en(~mode && run),
 .rst(btnC),
-.state(led[8:3])
+.state(stopwatch_output)
 );
 
 //Timer Module Instance
 //Use "clk_1Hz" as clock signal to stopwatch and timer modules
 timer timer_inst (
 .clk(clk_1Hz),
-.en(sw[0] && sw[1]),
+.en(mode && run),
 .rst(btnC),
-.load(sw[2]),
-.load_value(sw[15:10]),
-.state(led[15:10])
+.load(load),
+.load_value(load_value),
+.state(timer_output)
 );
+
+// Multiplexer variable wires
+wire stopwatch_output = led[8:3];
+wire timer_output = led[15:10]; 
+
+//Timer vs Stopwatch Multiplexer
+twoToOne_mux twoToOne_mux_inst (
+    .A(stopwatch_output),
+    .B(timer_output),
+    .Sel(sw[0]),
+    .Y(countMulti)
+);
+
+endmodule
+
+module twoToOne_mux(
+    input [5:0] A, [5:0] B,
+    input Sel, 
+    output [5:0] Y
+);
+
+// potential error
+    assign Y = 
+              (Sel == 1'b0 ? A:
+               Sel == 1'b1 ? B:
+               0);
 
 endmodule
