@@ -1,23 +1,8 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 04/21/2026 09:11:24 AM
-// Design Name: 
-// Module Name: dff
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+//---------------------------------------------------------------------------
+// Module Name: dff_with_enable
+// Description: D-Flip-Flop with Asynchronous Reset and Clock Enable.
+//---------------------------------------------------------------------------
 
 
 module dff(
@@ -30,12 +15,14 @@ module dff(
     initial begin
         Q <= 0;
     end
+    // Sequential logic block: Triggers on the rising edge of clock or reset
     always @(posedge Clock, posedge Reset) begin
             if (Reset) begin
-                Q <= 0;
+                Q <= 0; // Clear on reset
             end
             else if(en) begin
-                Q <= D;
+                Q <= D; // capture input on enable
             end
+        // Implicit 'else' maintains current state of q
         end
 endmodule
