@@ -1,4 +1,11 @@
-//Timer: Mod-60 downcounter with synchronous load
+/*
+ *  Timer: Mod-60 downcounter with synchronous load
+ *
+ *  Counts down from a preloaded value to 0 & stops.
+ *  Switches 10-15 set the timers input value & switch 2 loads it to the display.
+ *  Switch 1 acts as the run/pause control.
+*/
+
 module timer(
     input clk,
     input rst,
@@ -10,7 +17,7 @@ module timer(
 
 wire is_zero = (state == 6'b0);
 
-always @(posedge clk) begin
+always @(posedge clk, posedge rst) begin
     if (rst) begin
         state <= 6'b0;
     end
