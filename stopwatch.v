@@ -17,11 +17,12 @@ module stopwatch(
     assign reset_trigger = (state[5] & state[4] & state[3] & state[2] & ~state[1] & ~state[0]);
     wire total_reset;
     assign total_reset = rst | reset_trigger;
-        
+
+// Storage to transfer outputs
 wire [5:0] YToD;
 wire [5:0] CinToCout;
 
-
+// Bit zero logic
 fullAdder bitZeroAdder (
 .A(state[0]),
 .B(1'b1),
@@ -37,6 +38,7 @@ dff bitZeroFlop (
 .Q(state[0])
 );
 
+// Bit one logic
 fullAdder bitOneAdder (
 .A(state[1]),
 .B(1'b0),
@@ -52,6 +54,7 @@ dff bitOneFlop (
 .Q(state[1])
 );
 
+// Bit two logic
 fullAdder bitTwoAdder (
 .A(state[2]),
 .B(1'b0),
@@ -67,6 +70,7 @@ dff bitTwoFlop (
 .Q(state[2])
 );
 
+// Bit three logic
 fullAdder bitThreeAdder (
 .A(state[3]),
 .B(1'b0),
@@ -82,6 +86,7 @@ dff bitThreeFlop (
 .Q(state[3])
 );
 
+// Bit four logic
 fullAdder bitFourAdder (
 .A(state[4]),
 .B(1'b0),
@@ -97,6 +102,7 @@ dff bitFourFlop (
 .Q(state[4])
 );
 
+// Bit five logic
 fullAdder bitFiveAdder (
 .A(state[5]),
 .B(1'b0),
@@ -111,12 +117,11 @@ dff bitFiveFlop (
 .Reset(total_reset),
 .Q(state[5])
 );
-
-
-    
-   
+ 
 endmodule
 
+// Two input, one bit each I/O full adder
+// Properly handles a Carry In and Carry Out 
 module fullAdder (
     input A,B, Cin,
     output Y, Cout
