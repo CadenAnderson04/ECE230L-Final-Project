@@ -15,18 +15,20 @@ module timer(
     output reg [5:0] state     //6-bits to represent the highest number 59
 );
 
+// Represents the state of zero that should trigger a stoppage
 wire is_zero = (state == 6'b0);
 
 always @(posedge clk, posedge rst) begin
     if (rst) begin
-        state <= 6'b0;
+        state <= 6'b0; // reset to zero
     end
     else if (load) begin
-        state <= load_value;
+        state <= load_value; // load the current load value
     end
     else if (en && !is_zero) begin
-        state <= state - 1'b1;
+        state <= state - 1'b1; // decrement/execute timer functionality
     end
+    // holds value if no conditions met
 end
 
 endmodule
