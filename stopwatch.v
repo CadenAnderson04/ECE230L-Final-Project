@@ -1,4 +1,10 @@
-//StopWatch: Modulo-60 Counter
+/*
+StopWatch: Modulo-60 Counter
+
+    Counts from 0 to 60 seconds, only displays 0 - 59 then resets to 0 at 60 seconds.
+    
+
+*/
 module stopwatch(
     input clk,
     input rst,
