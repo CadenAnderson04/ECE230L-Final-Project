@@ -91,7 +91,6 @@ module twoToOne_mux(
     output [5:0] Y
 );
 
-// potential error
     assign Y = 
               (Sel == 1'b0 ? A:
                Sel == 1'b1 ? B:
